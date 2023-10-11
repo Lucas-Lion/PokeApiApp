@@ -1,0 +1,72 @@
+@charset "utf-8";
+
+body {
+    background-color: #dad8d8;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: start;
+    margin-bottom: 2em;
+}
+
+h1 {
+    text-align: center;
+    background-color: #8C1B24;
+    color: #F5E7DE;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 4rem;
+}
+
+#spaceSearch {
+    display: flex;
+}
+
+#spaceSearch button,
+#spaceSearch input {
+    font-size: 1em;
+    padding: 7px 30px;
+    flex: 1;
+    border: none;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.192);
+}
+
+#spaceSearch button {
+    background-color: #8C1B24;
+    color: #F5E7DE;
+    border-radius: 10px 0 0 10px;
+    cursor: pointer;
+}
+
+#spaceSearch input {
+    border-radius: 0 10px 10px 0;
+}
+
+#spaceSearch button:hover {
+    background-color: #701018;
+}
+
+#table {
+    text-align: center;
+}
+
+thead {
+    background-color: #701018;
+    color: #e9e9e9;
+    font-weight: bold;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+tbody {
+    font-size: 1.5em;
+}
+
+#table-position {
+    display: flex;
+    justify-content: center;
+}
+
+
