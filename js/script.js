@@ -1,5 +1,5 @@
-function createGet(url) {
-    let request = new XMLHttpRequest();
+function createGet(url) { 
+    let request = new XMLHttpRequest(); 
 
     request.open("GET", url, false);
     request.send();
@@ -23,7 +23,7 @@ function createLine(pokemon) {
 
 async function searchPokemon() {
 
-    const searchTerm  = document.getElementById("search").value.toLowerCase(); // pegando o valores do input
+    const searchTerm  = document.getElementById("search").value.toLowerCase(); 
     const dataPokemon = await createGet(`https://pokeapi.co/api/v2/pokemon/${searchTerm}`);
     const pokemonInfo = JSON.parse(dataPokemon);
     const table       = document.getElementById("table");
@@ -35,8 +35,6 @@ async function searchPokemon() {
         table.appendChild(line);
 
     } else {
-        window.alert("No Found");
+        alert("No Found"); // não funcionando
     }
 }
-
-main();
