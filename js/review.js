@@ -8,7 +8,9 @@ function searchPokemon(searchTerm) {
     .then(response => response.json())
     .then((data) =>  {
         const table = document.getElementById("table");
-        table.appendChild(createLine(data));
+        table.innerHTML = "";
+        table.appendChild(createTableTitles(data));
+        table.appendChild(createLines(data));
     })
     .catch(error => {
         alert('Houve um erro na comunicação');
@@ -17,22 +19,31 @@ function searchPokemon(searchTerm) {
     .finally(() => (document.getElementById("search").value = ""));
 }
 
-function createLine(pokemon) {
-    const line   = document.createElement("tr");
-    const tdId   = document.createElement("td");
-    const tdImg   = document.createElement("td");
-    const img   = document.createElement("img");
-    const tdName = document.createElement("td");
-    
-    tdId.innerHTML   = pokemon.id;
-    img.src = pokemon.sprites.back_default;
-    img.alt = pokemon.name;
-    tdImg.appendChild(img);
-    tdName.innerHTML = pokemon.name;
+function createTableTitles(pokemon) {
+    const head = document.createElement("thead");
 
-    line.appendChild(tdId);
-    line.appendChild(tdImg);
-    line.appendChild(tdName);
+    Object.keys(pokemon).map((key) => {
+        const element = document.createElement("td");
 
-    return line;
+        if (typeof pokemon[key] !== "object" && typeof pokemon[key] !== "array") {
+            element.innerHTML = key;
+            head.appendChild(element);
+        } 
+    })
+
+    return head;
+}
+
+function createLines(pokemon) {
+    const line = document.createElement("tr");
+    Object.keys(pokemon).map((key) => {
+        const element = document.createElement("td");
+
+        if (typeof pokemon[key] !== "object" && typeof pokemon[key] !== "array") {
+            element.innerHTML = pokemon[key];
+            line.appendChild(element);
+        } 
+    })
+
+    return document.createElement("tbody").appendChild(line);
 }
