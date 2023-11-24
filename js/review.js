@@ -7,7 +7,8 @@ function loadPokemons() {
 
 function handleSearch(event) {
     event.preventDefault();
-    const searchTerm = document.getElementById("search").value;
+    let searchTerm = document.getElementById("search").value;
+    searchTerm = searchTerm.toLowerCase();
     searchPokemon(searchTerm);
 }
 
