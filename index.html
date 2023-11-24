@@ -4,24 +4,29 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/style.css" />
-        <title>Document</title>
+        <link rel="shortcut icon" href="images/pokebola.svg" type="image/x-icon">
+        <title>PokeApiApp</title>
     </head>
     <body>
-        <h1>Pokémon</h1>
+        <header>
+            <h1>POKEDEX</h1>
+        </header>
 
-        <div class="container">
-            <div id="spaceSearch">
-                <button onclick="handleSearch()">Search</button>
+        <main>
+            <form action="" method="get" class="search-form">
+                <input type="search" name="search" id="search" placeholder="Buscar Pokémon">
+                <button type="submit" onclick="handleSearch(event)">Buscar</button>
+            </form>
 
-                <input type="text" name="search" id="search" />
+            <div class="row" id="row">
+                
             </div>
-        </div>
-        <img src="" alt="">
+        </main>
 
-        <table id="table">
-        </table>
+        <footer>
+            <p>Desenvolvido por <a href="">Lucas Lion</a></p>
+        </footer>
 
-        <!-- <script src="js/script.js"></script> -->
         <script src="js/review.js"></script>
     </body>
 </html>
