@@ -18,8 +18,13 @@ h1 {
     font-size: 2.6em;
     text-align: center;
     color: #F5E7DE;
-    padding: 1rem;
-    margin: 2rem 0;
+    margin: 0 0 3rem 0;
+}
+
+#iconPoke {
+    display: flex;
+    justify-content: center;
+    margin: 3rem 0 1rem 0;
 }
 
 main {
@@ -51,6 +56,10 @@ main {
     background-color: #5f75b8;
     color: #fff;
     cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: #4a5e9a;
 }
 
 .row {
