@@ -89,7 +89,7 @@ main {
     height: auto;
 }
 
-.teste {
+.heightCard {
     padding: 10px;
 }
 
@@ -108,10 +108,39 @@ main {
     border: none;
     font-size: 20px;
     cursor: pointer;
+    background-color: #5f75b8;
+    color: #fff;
+    padding: 0px 10px;
+    border-radius: 5px;
+}
+
+.close-button:hover {
+    background-color: #4a5e9a;
 }
 
 .card {
     position: relative;
+}
+
+.pokemon-details-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    box-sizing: border-box;
+    overflow: auto;
+    padding: 30px;
+}
+
+.pokemon-details-overlay p {
+    font-family: Arial, sans-serif;
+    font-size: 1.1em;
+    color: white;
+    text-align: center;
+    margin: 20px 0;
 }
 
 footer {

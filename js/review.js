@@ -2,20 +2,19 @@ window.onload = loadPokemons;
 
 function loadPokemons() {
     const pokemons = getPokemonsFromLocalStorage();
-    pokemons.forEach(pokemon => appendPokemonToRow(pokemon));
+    pokemons.forEach(appendPokemonToRow);
 }
 
 function handleSearch(event) {
     event.preventDefault();
-    let searchTerm = document.getElementById("search").value;
-    searchTerm = searchTerm.toLowerCase();
+    const searchTerm = document.getElementById("search").value.toLowerCase();
     searchPokemon(searchTerm);
 }
 
 function searchPokemon(searchTerm) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm}`)
         .then(response => response.json())
-        .then(data => addPokemonToRowAndLocalStorage(data))
+        .then(addPokemonToRowAndLocalStorage)
         .catch(showError)
         .finally(clearSearch);
 }
@@ -35,8 +34,7 @@ function getPokemonsFromLocalStorage() {
 }
 
 function addPokemonToLocalStorage(pokemon) {
-    const pokemons = getPokemonsFromLocalStorage();
-    pokemons.push(pokemon);
+    const pokemons = [...getPokemonsFromLocalStorage(), pokemon];
     localStorage.setItem('pokemons', JSON.stringify(pokemons));
 }
 
@@ -50,61 +48,61 @@ function clearSearch() {
 }
 
 function createCard(pokemon) {
-    const card = createPokemonCard(pokemon);
-    const removeButton = createRemoveButton(pokemon, card);
-    card.appendChild(removeButton);
-    return card;
-}
-
-function createPokemonCard(pokemon) {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    const img = document.createElement("img");
-    img.src = pokemon.sprites.front_default;
-    img.alt = pokemon.name;
-    card.appendChild(img);
-
-    const teste = document.createElement("div");
-    teste.className = "teste";
-
+    const card = createElement("div", { className: "card" });
+    const img = createElement("img", { src: pokemon.sprites.front_default, alt: pokemon.name });
+    const heightCard = createElement("div", { className: "heightCard" });
     const cardDetails = createCardDetails(pokemon);
-    teste.appendChild(cardDetails);
-    card.appendChild(teste);
+    const overlay = createPokemonDetailsOverlay(pokemon);
+    const removeButton = createRemoveButton(pokemon, card);
+
+    heightCard.appendChild(cardDetails);
+    card.append(img, heightCard, overlay, removeButton);
+
+    card.addEventListener('click', toggleOverlayDisplay.bind(null, overlay));
 
     return card;
 }
 
-function createCardDetails(pokemon) {
-    const cardDetails = document.createElement("div");
-    cardDetails.className = "cardDetails";
+function createElement(tag, attributes) {
+    const element = document.createElement(tag);
+    Object.assign(element, attributes);
+    return element;
+}
 
-    const name = document.createElement("p");
-    name.className = "name";
-    name.innerHTML = pokemon.name;
-    cardDetails.appendChild(name);
+function createCardDetails({ name, id }) {
+    const cardDetails = createElement("div", { className: "cardDetails" });
+    const nameElement = createElement("p", { className: "name", innerHTML: name });
+    const number = createElement("p", { innerHTML: `#${id}` });
 
-    const number = document.createElement("p");
-    number.innerHTML = `#${pokemon.id}`;
-    cardDetails.appendChild(number);
+    cardDetails.append(nameElement, number);
 
     return cardDetails;
 }
 
 function createRemoveButton(pokemon, card) {
-    const removeButton = document.createElement("button");
-    removeButton.className = "close-button";
-    removeButton.innerHTML = "x";
-    removeButton.onclick = function() {
-        removeCardAndPokemonFromLocalStorage(card, pokemon);
-    };
+    const removeButton = createElement("button", { className: "close-button", innerHTML: "x" });
+    removeButton.onclick = removeCardAndPokemonFromLocalStorage.bind(null, card, pokemon);
     return removeButton;
 }
 
-function removeCardAndPokemonFromLocalStorage(card, pokemon) {
+function removeCardAndPokemonFromLocalStorage(card, { id }) {
     card.parentNode.removeChild(card);
-    const pokemons = getPokemonsFromLocalStorage();
-    const index = pokemons.findIndex(p => p.id === pokemon.id);
-    pokemons.splice(index, 1);
+    const pokemons = getPokemonsFromLocalStorage().filter(p => p.id !== id);
     localStorage.setItem('pokemons', JSON.stringify(pokemons));
+}
+
+function createPokemonDetailsOverlay({ height, weight, abilities }) {
+    const overlay = createElement("div", { className: "pokemon-details-overlay", style: { display: "none" } });
+    const heightElement = createElement("p", { innerHTML: `Altura: <br>${height}` });
+    const weightElement = createElement("p", { innerHTML: `Peso: <br>${weight}` });
+    const ability = createElement("p", { innerHTML: `Habilidade: <br>${abilities[0].ability.name}` });
+
+    overlay.append(heightElement, weightElement, ability);
+
+    return overlay;
+}
+
+function toggleOverlayDisplay(overlay) {
+    overlay.style.display = overlay.style.display === "none" ? "block" : "none";
+    event.stopPropagation();
 }
