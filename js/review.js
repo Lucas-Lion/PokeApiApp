@@ -92,7 +92,8 @@ function removeCardAndPokemonFromLocalStorage(card, { id }) {
 }
 
 function createPokemonDetailsOverlay({ height, weight, abilities }) {
-    const overlay = createElement("div", { className: "pokemon-details-overlay", style: { display: "none" } });
+    const overlay = createElement("div", { className: "pokemon-details-overlay" });
+    overlay.style.display = "none";
     const heightElement = createElement("p", { innerHTML: `Altura: <br>${height}` });
     const weightElement = createElement("p", { innerHTML: `Peso: <br>${weight}` });
     const ability = createElement("p", { innerHTML: `Habilidade: <br>${abilities[0].ability.name}` });
