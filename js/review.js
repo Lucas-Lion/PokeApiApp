@@ -1,4 +1,7 @@
-window.onload = loadPokemons;
+window.onload = function() {
+    loadPokemons();
+    setupPokeballDrag();
+}
 
 function loadPokemons() {
     const pokemons = getPokemonsFromLocalStorage();
@@ -47,8 +50,16 @@ function clearSearch() {
     document.getElementById("search").value = "";
 }
 
+function setupPokeballDrag() {
+    const pokeball = document.getElementById("iconPoke").firstElementChild;
+    pokeball.draggable = true;
+    pokeball.addEventListener("dragstart", function(event) {
+        event.dataTransfer.setData("text/plain", event.target.id);
+    });
+}
+
 function createCard(pokemon) {
-    const card = createElement("div", { className: "card" });
+    const card = createElement("div", { className: "card", id: pokemon.id });
     const img = createElement("img", { src: pokemon.sprites.front_default, alt: pokemon.name });
     const heightCard = createElement("div", { className: "heightCard" });
     const cardDetails = createCardDetails(pokemon);
@@ -59,8 +70,23 @@ function createCard(pokemon) {
     card.append(img, heightCard, overlay, removeButton);
 
     card.addEventListener('click', toggleOverlayDisplay.bind(null, overlay));
+    setupCardDrop(card);
 
     return card;
+}
+
+function setupCardDrop(card) {
+    card.addEventListener("dragover", function(event) {
+        event.preventDefault();
+    });
+
+    card.addEventListener("drop", function(event) {
+        event.preventDefault();
+        const pokemonId = event.dataTransfer.getData("text");
+        if (pokemonId) {
+            removeCardAndPokemonFromLocalStorage(card, { id: pokemonId });
+        }
+    });
 }
 
 function createElement(tag, attributes) {
